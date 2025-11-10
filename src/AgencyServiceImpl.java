@@ -10,20 +10,24 @@ agencies[count++]=agency;
     @Override
     public Agency getAgencyById(Long id) {
         try {
-            if (id < 0 || id == 0) {
-                throw new RuntimeException("Id ters bolbosh kerek je id 0 go barabar bolbosh kerek");
+            if (id == null || id <= 0) {
+                throw new IllegalArgumentException("Id dolzhen byt bolshe nulya");
             }
 
-            for (Agency a: agencies) {
-                if (a.getId() == id) {
-                    return a;
-                } else {
-                    throw new NullPointerException("Myndai id menen Agent  baza jok");
+            for (int i = 0; i < count; i++) {
+                Agency agency = agencies[i];
+                if (agency != null && agency.getId() == id) {
+                    return agency;
                 }
             }
-        } catch (RuntimeException e) {
+
+
+            throw new NullPointerException("Agentstvo s takim id ne naideno");
+
+        } catch (IllegalArgumentException | NullPointerException e) {
             System.out.println(e.getMessage());
         }
+
         return null;
     }
 
